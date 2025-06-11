@@ -1,0 +1,89 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.env
+.env.*.local
+package-lock.json
+
+# VS Code
+.vscode/
+.history/
+*.code-workspace
+
+# Logs
+logs
+*.log
+*.log.*
+log/
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+
+# Kubernetes
+k8s/tmp/
+k8s/secrets/
+k8s/.generated/
+
+# Coverage & reports
+coverage/
+*.lcov
+.nyc_output/
+test-results/
+*.tsbuildinfo
+
+# Build
+dist/
+build/
+out/
+tmp/
+temp/
+.cache/
+.cache-loader/
+.next/
+.nuxt/
+.svelte-kit/
+.expo/
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional: ignore compiled JS from TS
+# Uncomment if you're compiling TS to JS
+# *.js
+# *.js.map
+
+# Binaries
+*.exe
+*.out
+*.app
+*.dll
+*.so
+*.dylib
+
+# IDEs
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Misc
+*.swp
+*.bak
+*.tmp
+*.orig
+
+# Local dev tools
+.local/
+
+#Compress
+*.tar
+*.zip
