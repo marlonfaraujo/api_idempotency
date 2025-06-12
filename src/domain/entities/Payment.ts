@@ -28,7 +28,7 @@ export default class Payment {
         return payment;
     }
 
-    approved(): void{
+    approve(): void{
         this.status = PaymentStatus.APPROVED;
         this.updatedAt = new Date();
     }
