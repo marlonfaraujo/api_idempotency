@@ -1,0 +1,16 @@
+**/.dockerignore
+**/.env
+**/.git
+**/.vscode
+**/.devcontainer
+**/docker-compose*
+**/Dockerfile*
+**/npm-debug.log
+**/node_modules
+LICENSE
+README.md
+!**/.gitignore
+!.git/HEAD
+!.git/config
+!.git/packed-refs
+!.git/refs/heads/**

@@ -1,0 +1,37 @@
+{
+  "name": "api_idempotency",
+  "version": "1.0.0",
+  "description": "Repository with a brief example of how to work with idempotence, to ensure that a request even if repeated, is processed only once",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marlonfaraujo/api_idempotency.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marlonfaraujo/api_idempotency/issues"
+  },
+  "homepage": "https://github.com/marlonfaraujo/api_idempotency#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/jest": "^29.5.4",
+    "@types/node": "^24.0.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "ts-jest": "^29.1.1"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jest": "^29.6.4",
+    "pg-promise": "^11.14.0",
+    "redis": "^5.5.6"
+  }
+}

@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  node-app:
+    container_name: app_node
+    image: node:22
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/workspace
+    ports:
+      - "3000:3000"
+    networks:
+      - node-app-network
+
+  postgres:
+    container_name: app_database
+    image: postgres:13
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: developer
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - node-app-network
+
+  redis:
+    container_name: app_cache
+    image: redis:7.4.1-alpine
+    restart: always
+    command: redis-server --requirepass r3d1s
+    ports:
+      - "6379:6379"
+    networks:
+      - node-app-network
+
+volumes:
+  pgdata:
+
+networks:
+  node-app-network: {}
