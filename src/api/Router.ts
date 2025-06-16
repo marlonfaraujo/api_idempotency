@@ -4,6 +4,7 @@ import PostgreDbServer from "../infra/database/PostgreDbServer";
 import OrderDatabaseRepository from "../infra/repositories/OrderDatabaseRepository";
 import PaymentDatabaseRepository from "../infra/repositories/PaymentDabaseRepository";
 import { CryptoUuidGenerator } from "../infra/uuid/CryptoUuidGenerator";
+import HealthCheck from "./features/HealthCheck";
 import OrderFeature from "./features/OrderFeature";
 import HttpServer from "./HttpServer";
 
@@ -22,5 +23,7 @@ export default class Router {
         const paymentRepository = new PaymentDatabaseRepository(this.connection);
         const orderFeature = new OrderFeature(this.httpServer, paymentRepository, orderRepository, this.uuid);
         orderFeature.config();
+        const healthCheck = new HealthCheck(this.httpServer);
+        healthCheck.config();
     }
 }
