@@ -16,4 +16,6 @@ Here will still have redis for cache and devcontainer.
    1. [Jest](https://www.npmjs.com/package/jest) - Automated testing framework;
    2. [Axios](https://www.npmjs.com/package/axios) - Promise-based HTTP library for Node.js and browsers. Used to make HTTP/HTTPS requests.
 * **Container Technology**:
-   1. [Docker](https://www.docker.com/) Containerizing the application to facilitate testing.
+   1. [Docker](https://www.docker.com/) - Containerizing the application to facilitate testing.
+* **Tools**:
+   1. [Dev Container](https://containers.dev/) - Visual Studio Code feature that allows you to define isolated development environments using Docker containers
