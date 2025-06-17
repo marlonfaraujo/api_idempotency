@@ -2,6 +2,51 @@ Repository with a brief example of how to work with idempotency, to ensure that 
 
 Here will still have redis for cache and devcontainer.
 
+### More about:
+In the IdempotencyMiddleware.ts class, the middleware first checks if the "Idempotency-Key" header is present and contains a value. This key is used to prevent duplicate processing of the same request.
+
+Next, it verifies whether a corresponding response is already stored in the Redis cache. If found, it indicates the request has been processed before, and the cached result should be returned to ensure idempotency and avoid re-executing the operation.
+Note: It is essential to set an expiration time for the cache.
+```ts
+//class src/api/middleware/IdempotencyMiddleware.ts
+async handler(req: any, res: any, next: any){
+   const key = req.header('Idempotency-Key');
+   if (!key) {
+      return res.status(400).json({ error: 'Missing Idempotency-Key header' });
+   }
+   const cached = await this.cache.get(key);
+   if (cached) {
+      const parsed = JSON.parse(cached);
+      return res.status(201).json(parsed);
+   }
+   const jsonHandler = res.json.bind(res);
+   res.json = (body: any) => {
+      if (res.statusCode < 400) {
+          this.cache.set(key, JSON.stringify(body), {
+              expiration: this.ttlSeconds
+          });
+      }
+      return jsonHandler(body);
+   };
+   next();
+}
+```
+In the request route declaration, inform the middleware method.
+```ts
+//class src/api/features/OrderFeature.ts
+this.httpServer.route("post", "/order/:orderId/payment", 
+   this.idempotencyMiddleware.handler, 
+   this.asyncHandler.wrapper(async (req: any, res: any) => {
+       const dto : PaymentDto = req.body;
+       dto.orderId = req.params.orderId;
+       const processPayment = new ProcessPayment(this.paymentRepository, this.orderRepository, this.idGenerator);
+       const payment = await processPayment.execute(dto);
+       
+       return res.status(201).json(payment);
+   }),
+   this.errorMiddleware.handler
+);
+```
 ### Technologies and tools used:
 * **Databases - Persistence**:
    1. [Redis](https://redis.io/) - Redis is a fast and versatile in-memory database ideal for caching;
