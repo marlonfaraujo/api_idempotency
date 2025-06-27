@@ -1,5 +1,5 @@
-import Payment from "../../../domain/entities/Payment";
 import PaymentRepository from "../../../domain/repositories/PaymentRepository";
+import { PaymentResultDto } from "../../dtos/PaymentResultDto";
 
 export default class GetPaymentById {
 
@@ -7,7 +7,9 @@ export default class GetPaymentById {
 
     }
 
-    async execute(id: string): Promise<Payment>{
-        return await this.repository.getById(id);
+    async execute(id: string): Promise<PaymentResultDto>{
+        const payment = await this.repository.getById(id);
+        const result: PaymentResultDto = { paymentId: payment.paymentId, orderId: payment.orderId, amount: payment.amount, paymentType: payment.paymentType, status: payment.status };
+        return result;
     }
 }

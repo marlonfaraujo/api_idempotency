@@ -1,11 +1,11 @@
 import IdGeneratorAbstraction from "../../application/abstractions/IdGeneratorAbstraction";
+import { PaymentRequestDto } from "../../application/dtos/PaymentRequestDto";
 import GetOrderById from "../../application/usecases/order/GetOrderById";
 import ProcessPayment from "../../application/usecases/payment/ProcessPayment";
 import { OrderRepository } from "../../domain/repositories/OrderRepository";
 import PaymentRepository from "../../domain/repositories/PaymentRepository";
 import RedisCache from "../../infra/database/RedisCache";
 import AsyncHandler from "../AsyncHandler";
-import { PaymentDto } from "../dtos/PaymentDto";
 import HttpError from "../exceptions/HttpError";
 import HttpServer from "../HttpServer";
 import ErrorMiddleware from "../middleware/ErrorMiddleware";
@@ -32,11 +32,10 @@ export default class OrderFeature {
         this.httpServer.route("post", "/order/:orderId/payment", 
             this.idempotencyMiddleware.handler, 
             this.asyncHandler.wrapper(async (req: any, res: any) => {
-                const dto : PaymentDto = req.body;
-                dto.orderId = req.params.orderId;
+                const request : PaymentRequestDto = req.body;
+                request.orderId = req.params.orderId;
                 const processPayment = new ProcessPayment(this.paymentRepository, this.orderRepository, this.idGenerator);
-                const payment = await processPayment.execute(dto);
-                
+                const payment = await processPayment.execute(request);
                 return res.status(201).json(payment);
             }),
             this.errorMiddleware.handler
