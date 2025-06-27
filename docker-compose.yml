@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  node-app:
-    container_name: app_node
+  idempotency-api:
+    container_name: idempotency_api
     image: node:22
     build:
       context: .
@@ -12,10 +12,10 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - node-app-network
+      - idempotency-api-network
 
-  postgres:
-    container_name: app_database
+  idempotency-api-postgres:
+    container_name: idempotency_api_postgres
     image: postgres:13
     restart: unless-stopped
     ports:
@@ -27,20 +27,20 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
-      - node-app-network
+      - idempotency-api-network
 
-  redis:
-    container_name: app_cache
+  idempotency-api-redis:
+    container_name: idempotency_api_redis
     image: redis:7.4.1-alpine
     restart: always
     command: redis-server --requirepass r3d1s
     ports:
       - "6379:6379"
     networks:
-      - node-app-network
+      - idempotency-api-network
 
 volumes:
   pgdata:
 
 networks:
-  node-app-network: {}
+  idempotency-api-network: {}

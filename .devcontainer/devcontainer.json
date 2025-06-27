@@ -3,7 +3,7 @@
 	"name": "Idempotency Node.js project",
 	"remoteUser": "node",
 	"dockerComposeFile": "../docker-compose.yml",
-	"service": "node-app",
+	"service": "idempotency-api",
 	"workspaceFolder": "/workspace",
   	"features": {},
   	"customizations": {

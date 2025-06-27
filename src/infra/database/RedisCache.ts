@@ -7,9 +7,8 @@ export default class RedisCache implements CacheConnectionAbstraction {
 
     constructor(){
         this.client = createClient({
-            url: "redis://:r3d1s@redis:6379"
+            url: "redis://:r3d1s@idempotency_api_redis:6379"
         });
-        this.connect();
     }
 
     async connect(): Promise<void>{
@@ -17,6 +16,7 @@ export default class RedisCache implements CacheConnectionAbstraction {
     }
 
     async set(key: string, data: string, options?: any): Promise<void>{
+        this.connect();
         let opt = {};
         if (options){
             if(options.expiration){
@@ -24,10 +24,14 @@ export default class RedisCache implements CacheConnectionAbstraction {
             }
         }
         await this.client.set(key, data, opt);
+        this.close();
     }
     
     async get(key: string): Promise<any>{
-        return await this.client.get(key);
+        this.connect();
+        const result = await this.client.get(key);
+        this.close();
+        return result;
     }
 
     async close(): Promise<void>{

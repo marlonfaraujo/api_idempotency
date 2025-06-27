@@ -10,7 +10,7 @@ describe('Compression Middleware', () => {
   healthCheck.config();
   
   it('should compress the response with gzip when requested', async () => {
-    const response = await axios.get('http://localhost:3000/test', {
+    const response = await axios.get('http://localhost:3030/test', {
       headers: {
         'Accept-Encoding': 'gzip'
       },

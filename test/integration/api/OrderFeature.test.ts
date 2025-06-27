@@ -17,7 +17,7 @@ test("Must make a request and return status 400 because you did not inform the i
     };
 
     await expect(
-        axios.post(`http://node-app:3000/order/${input.orderId}/payment`, input)
+        axios.post(`http://idempotency-api:3030/order/${input.orderId}/payment`, input)
     ).rejects.toMatchObject({
         response: expect.objectContaining({
             status: 400
@@ -41,8 +41,8 @@ test("Must make several requests to the payment API, with the same data and the 
       'Content-Type': 'application/json',
       'Idempotency-Key': key
     };
-    const response = await axios.post(`http://node-app:3000/order/${input.orderId}/payment`, input, { headers: header });
-    const response2 = await axios.post(`http://node-app:3000/order/${input.orderId}/payment`, input, { headers: header });
+    const response = await axios.post(`http://idempotency-api:3030/order/${input.orderId}/payment`, input, { headers: header });
+    const response2 = await axios.post(`http://idempotency-api:3030/order/${input.orderId}/payment`, input, { headers: header });
     
     const output = response.data;
     const output2 = response2.data;
