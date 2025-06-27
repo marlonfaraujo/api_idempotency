@@ -16,4 +16,5 @@ docker exec -i idempotency_api_postgres psql -U postgres -d developer < ./script
 
 echo "Done."
 
-#command run: bash ./postgres-docker.sh
+#Run this script like this
+#sh < ./postgres-docker.sh
