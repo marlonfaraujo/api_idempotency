@@ -35,8 +35,8 @@ export default class OrderFeature {
                 const request : PaymentRequestDto = req.body;
                 request.orderId = req.params.orderId;
                 const processPayment = new ProcessPayment(this.paymentRepository, this.orderRepository, this.idGenerator);
-                const payment = await processPayment.execute(request);
-                return res.status(201).json(payment);
+                const paymentResult = await processPayment.execute(request);
+                return res.status(201).json(paymentResult);
             }),
             this.errorMiddleware.handler
         );
@@ -45,12 +45,12 @@ export default class OrderFeature {
         this.httpServer.route("get", "/order/:orderId", 
             this.asyncHandler.wrapper(async (req: any, res: any) => {
                 const getOrder = new GetOrderById(this.orderRepository);
-                const order = await getOrder.execute(req.params.orderId);
-                if(!order){
+                const orderResult = await getOrder.execute(req.params.orderId);
+                if(!orderResult){
                     const error = new HttpError(`Not found order with id: ${req.params.orderId}`, 400);
                     throw error;
                 }
-                return res.json(order);
+                return res.json(orderResult);
             }),
             this.errorMiddleware.handler
         );
